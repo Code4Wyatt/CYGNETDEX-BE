@@ -8,5 +8,16 @@
     "pg": "^8.8.0",
     "sequelize": "^6.23.1",
     "uuid": "^9.0.0"
-  }
+  },
+  "name": "cygnetdex-be",
+  "description": "Back End infrastructure for CYGNET.IO Decetralised Exchange (DEX)",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./server.js"
+  },
+  "author": "",
+  "license": "ISC"
 }
