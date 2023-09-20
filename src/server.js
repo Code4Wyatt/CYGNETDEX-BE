@@ -4,12 +4,16 @@ import bodyParser from 'body-parser'
 import mongoose from "mongoose"
 import cors from "cors"
 import listEndpoints from "express-list-endpoints"
-import moralisRouter from "./routes/moralis/index.js"
-
 import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from "./errorHandlers.js"
-import Moralis from 'moralis';
+import Moralis from 'moralis'
+
+import moralisRouter from "./routes/moralis/index.js"
+import xrplRouter from "./routes/xrpl/index.js"
+import xummRouter from "./routes/xumm/index.js"
+
 dotenv.config();
-const server = express()
+
+const server = express();
 
 const port = process.env.PORT || 3001;
 
@@ -24,7 +28,7 @@ Moralis.start({
 // Middlewares
 
 const corsOptions = {
-  origin: 'http://localhost:3000/',
+  origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
 };
 
@@ -34,11 +38,16 @@ server.use(bodyParser.json())
 
 
 
-server.use(cors())
+server.use(cors({
+  origin: 'http://localhost:3000', // Replace with your frontend URL
+  methods: 'GET,POST', // Allow only specific HTTP methods
+}))
 
 // Routes
 
 server.use("/moralis", moralisRouter)
+server.use("/xrpl", xrplRouter)
+server.use("/xumm", xummRouter)
 
 // Error Handlers
 
