@@ -119,4 +119,27 @@ xummRouter.post(
   }
 );
 
+// Get Account Currencies
+
+xummRouter.post(
+  "/gateway_balances",
+  async (req, res, next) => {
+    try {
+        const balancesResponse = await axios({
+          method: 'post',
+          url: 'http://s1.ripple.com:51234/',
+          headers: { 'Content-Type': 'application/json' },
+          data: req.body,
+        });
+
+        console.log('balancesResponse Response:', balancesResponse.data);
+    
+        res.json(balancesResponse.data);
+      } catch (error) {
+        console.error('Account Currencies: Error connecting to Ripple API:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+  }
+);
+
 export default xummRouter;
