@@ -3,7 +3,7 @@ import axios from 'axios';
 import {XummSdk} from 'xumm-sdk';
 import crypto from 'crypto';
 
-const Sdk = new XummSdk('3fc00c1e-2478-4696-810d-f6e432f64b96', '02f2479e-7237-498c-9747-c664fc7e2a7c');
+const Sdk = new XummSdk('3fc00c1e-2478-4696-810d-f6e432f64b96', 'c9854581-f8b1-4d5e-b809-cc50f3c0b079');
 
 const xummRouter = Router();
 
@@ -81,10 +81,11 @@ xummRouter.post(
     try {
         const xummRequest = {
             "TransactionType": "Payment",
-            "Destination": "", // Can have this be the paymentAddress created by the SWFT API?
+            "Destination": "",
+            "Amount": ""
         }
 
-        const payload = await Sdk.payload.create(request, true);
+        const payload = await Sdk.payload.create(xummRequest, true);
 
         console.log('XUMM API Payload:', payload);
     
