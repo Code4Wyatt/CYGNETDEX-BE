@@ -81,15 +81,15 @@ xummRouter.post(
     try {
         const xummRequest = {
             "TransactionType": "Payment",
-            "Destination": "",
-            "Amount": ""
+            "Destination": req.body.destination,
+            "Amount": req.body.amount
         }
-
+        console.log('xumm req', req.body)
         const payload = await Sdk.payload.create(xummRequest, true);
 
         console.log('XUMM API Payload:', payload);
     
-        res.json(rippleResponse.data);
+        res.json(payload);
       } catch (error) {
         console.error('Error connecting to Ripple API:', error);
         res.status(500).json({ error: 'Internal Server Error' });
