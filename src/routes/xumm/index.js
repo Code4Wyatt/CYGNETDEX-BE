@@ -143,6 +143,51 @@ xummRouter.post(
   }
 );
 
+xummRouter.post('/queryOrderState', async (req, res) => {
+  try {
+    // Extract orderNo from request
+    const { orderNo } = req.body;
+
+    // Validate orderNo
+    if (!orderNo) {
+      return res.status(400).send({ error: 'Order number is required' });
+    }
+
+    // Prepare request parameters
+    const params = {
+      orderNo: orderNo,
+      // Add other required parameters here, like sign
+    };
+
+    // Generate the signature (sign) as per SWFT documentation
+
+    // Make the request to SWFT API
+    const host = 'www.swftc.info';
+    let response = await fetch(`https://${host}/api/v2/queryOrderState`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Add other headers as required
+      },
+      body: JSON.stringify(params)
+    });
+
+    // Check if the request was successful
+    if (!response.ok) {
+      throw new Error('Error fetching order status');
+    }
+
+    // Parse the response
+    const data = await response.json();
+
+    // Send the response back to the client
+    res.json(data);
+  } catch (error) {
+    // Handle errors
+    res.status(500).send({ error: error.message });
+  }
+});
+
 xummRouter.post('/swap', async (req, res) => {
   const { destination, amount } = req.body;
   
